@@ -4,7 +4,7 @@ by Hengshuang Zhao, Jianping Shi, Xiaojuan Qi, Xiaogang Wang, Jiaya Jia, details
 
 ### Introduction
 
-This repository is modified from Caffe version of [yjxiong](https://github.com/yjxiong/caffe/tree/mem) and [DeepLab v2](https://bitbucket.org/aquariusjay/deeplab-public-ver2) for testing. Trainable code will be available later.
+This repository is modified from Caffe version of [yjxiong](https://github.com/yjxiong/caffe/tree/mem) and [DeepLab v2](https://bitbucket.org/aquariusjay/deeplab-public-ver2) for testing. Results are tested on Ubuntu 14.04. Trainable code will be available later.
 
 ### Usage
 
