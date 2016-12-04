@@ -1,0 +1,15 @@
+net: "models/action_recognition/vgg_16_rgb_train_val_fast.prototxt"
+test_iter: 170
+test_interval: 1000
+base_lr: 0.001
+lr_policy: "step"
+gamma: 0.1
+stepsize: 4000
+display: 20
+max_iter: 10000
+momentum: 0.9
+weight_decay: 0.0005
+snapshot: 1000
+snapshot_prefix: "cuhk_action_recognition_vgg_16_split1_rgb"
+iter_size: 4
+device_id: [0,1,2,3]
