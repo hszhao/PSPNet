@@ -8,7 +8,7 @@ This repository is modified from Caffe version of [yjxiong](https://github.com/y
 
 ## Installation
 
-For installation, please follow the instructions of [Caffe](https://github.com/BVLC/caffe) and [DeepLab v2](https://bitbucket.org/aquariusjay/deeplab-public-ver2). To enable cuDNN for GPU acceleration, cuDNN v5 is needed as required in 'yjxiong'. If you meet error related with 'matio', please please download and install [matio](matio) as required in 'DeepLab v2'.
+For installation, please follow the instructions of [Caffe](https://github.com/BVLC/caffe) and [DeepLab v2](https://bitbucket.org/aquariusjay/deeplab-public-ver2). To enable cuDNN for GPU acceleration, cuDNN v5 is needed as required in 'yjxiong'. If you meet error related with 'matio', please download and install [matio](matio) as required in 'DeepLab v2'.
 
 The code has been tested successfully on Ubuntu 14.04 and 12.04 with CUDA 7.0.
 
