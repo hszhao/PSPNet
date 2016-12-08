@@ -8,9 +8,8 @@
 #include "caffe/common.hpp"
 #include "caffe/proto/caffe.pb.h"
 #include "caffe/syncedmem.hpp"
-#include "caffe/util/math_functions.hpp"
 
-const int kMaxBlobAxes = INT_MAX;
+const int kMaxBlobAxes = 32;
 
 namespace caffe {
 
@@ -109,7 +108,7 @@ class Blob {
    * @brief Returns the 'canonical' version of a (usually) user-specified axis,
    *        allowing for negative indexing (e.g., -1 for the last axis).
    *
-   * @param index the axis index.
+   * @param axis_index the axis index.
    *        If 0 <= index < num_axes(), return index.
    *        If -num_axes <= index <= -1, return (num_axes() - (-index)),
    *        e.g., the last axis index (num_axes() - 1) if index == -1,
@@ -219,6 +218,7 @@ class Blob {
 
   const Dtype* cpu_data() const;
   void set_cpu_data(Dtype* data);
+  const int* gpu_shape() const;
   const Dtype* gpu_data() const;
   const Dtype* cpu_diff() const;
   const Dtype* gpu_diff() const;
@@ -226,6 +226,26 @@ class Blob {
   Dtype* mutable_gpu_data();
   Dtype* mutable_cpu_diff();
   Dtype* mutable_gpu_diff();
+
+  // jay add
+  const Dtype* cpu_data_at(const int n = 0, const int c = 0,
+			   const int h = 0, const int w = 0) const;
+  const Dtype* gpu_data_at(const int n = 0, const int c = 0,
+			   const int h = 0, const int w = 0) const;
+  const Dtype* cpu_diff_at(const int n = 0, const int c = 0,
+			   const int h = 0, const int w = 0) const;
+  const Dtype* gpu_diff_at(const int n = 0, const int c = 0,
+			   const int h = 0, const int w = 0) const;
+  Dtype* mutable_cpu_data_at(const int n = 0, const int c = 0,
+			     const int h = 0, const int w = 0);
+  Dtype* mutable_gpu_data_at(const int n = 0, const int c = 0,
+			     const int h = 0, const int w = 0);
+  Dtype* mutable_cpu_diff_at(const int n = 0, const int c = 0,
+			     const int h = 0, const int w = 0);
+  Dtype* mutable_gpu_diff_at(const int n = 0, const int c = 0,
+			     const int h = 0, const int w = 0);
+  // end jay add
+
   void Update();
   void FromProto(const BlobProto& proto, bool reshape = true);
   void ToProto(BlobProto* proto, bool write_diff = false) const;
@@ -268,6 +288,7 @@ class Blob {
  protected:
   shared_ptr<SyncedMemory> data_;
   shared_ptr<SyncedMemory> diff_;
+  shared_ptr<SyncedMemory> shape_data_;
   vector<int> shape_;
   int count_;
   int capacity_;

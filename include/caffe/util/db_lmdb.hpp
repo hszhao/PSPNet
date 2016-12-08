@@ -1,3 +1,4 @@
+#ifdef USE_LMDB
 #ifndef CAFFE_UTIL_DB_LMDB_HPP
 #define CAFFE_UTIL_DB_LMDB_HPP
 
@@ -18,8 +19,6 @@ class LMDBCursor : public Cursor {
   explicit LMDBCursor(MDB_txn* mdb_txn, MDB_cursor* mdb_cursor)
     : mdb_txn_(mdb_txn), mdb_cursor_(mdb_cursor), valid_(false) {
     SeekToFirst();
-    mdb_search_key_.mv_data = (char*)malloc(1024);
-    CHECK(mdb_search_key_.mv_data)<<"failed to allocation buffer for LMDB search key";
   }
   virtual ~LMDBCursor() {
     mdb_cursor_close(mdb_cursor_);
@@ -27,7 +26,6 @@ class LMDBCursor : public Cursor {
   }
   virtual void SeekToFirst() { Seek(MDB_FIRST); }
   virtual void Next() { Seek(MDB_NEXT); }
-  virtual string Lookup(string key){Seek(key); return value();};
   virtual string key() {
     return string(static_cast<const char*>(mdb_key_.mv_data), mdb_key_.mv_size);
   }
@@ -48,26 +46,9 @@ class LMDBCursor : public Cursor {
     }
   }
 
-  void Seek(string key){
-    strcpy((char*)mdb_search_key_.mv_data, key.c_str());
-    mdb_search_key_.mv_size = key.length();
-    int mdb_status = mdb_cursor_get(mdb_cursor_,
-                                    &mdb_search_key_, NULL,
-                                    MDB_SET);
-    if (mdb_status == MDB_NOTFOUND) {
-      valid_ = false;
-    } else {
-      MDB_CHECK(mdb_status);
-      valid_ = true;
-    }
-    Seek(MDB_GET_CURRENT);
-  }
-
   MDB_txn* mdb_txn_;
   MDB_cursor* mdb_cursor_;
   MDB_val mdb_key_, mdb_value_;
-
-  MDB_val mdb_search_key_;
   bool valid_;
 };
 
@@ -109,3 +90,4 @@ class LMDB : public DB {
 }  // namespace caffe
 
 #endif  // CAFFE_UTIL_DB_LMDB_HPP
+#endif  // USE_LMDB

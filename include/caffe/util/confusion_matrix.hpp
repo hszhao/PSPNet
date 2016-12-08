@@ -31,7 +31,6 @@ class ConfusionMatrix {
 
   void accumulate(const int actual, const int predicted);
   void accumulate(const ConfusionMatrix& conf);
-  void accumulate(const int actual, const int predicted, const unsigned long num);
  
   int numRows() const;
   int numCols() const;

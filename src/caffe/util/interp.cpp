@@ -21,25 +21,25 @@ void caffe_cpu_interp2(const int channels,
     for (int h2 = 0; h2 < height2; ++h2) {
       const int h1 = h2;
       for (int w2 = 0; w2 < width2; ++w2) {
-        const int w1 = w2;
-        if (packed) {
-          const Dtype* pos1 = &data1[channels * ((y1 + h1) * Width1 + (x1 + w1))];
-          Dtype* pos2 = &data2[channels * ((y2 + h2) * Width2 + (x2 + w2))];
-          for (int c = 0; c < channels; ++c) {
-            pos2[0] = pos1[0];
-            pos1++;
-            pos2++;
-          }
-        }
-        else {
-          const Dtype* pos1 = &data1[(y1 + h1) * Width1 + (x1 + w1)];
-          Dtype* pos2 = &data2[(y2 + h2) * Width2 + (x2 + w2)];
-          for (int c = 0; c < channels; ++c) {
-            pos2[0] = pos1[0];
-            pos1 += Width1 * Height1;
-            pos2 += Width2 * Height2;
-          }
-        }
+	const int w1 = w2;
+	if (packed) {
+	  const Dtype* pos1 = &data1[channels * ((y1 + h1) * Width1 + (x1 + w1))];
+	  Dtype* pos2 = &data2[channels * ((y2 + h2) * Width2 + (x2 + w2))];
+	  for (int c = 0; c < channels; ++c) {
+	    pos2[0] = pos1[0];
+	    pos1++;
+	    pos2++;
+	  }
+	}
+	else {
+	  const Dtype* pos1 = &data1[(y1 + h1) * Width1 + (x1 + w1)];
+	  Dtype* pos2 = &data2[(y2 + h2) * Width2 + (x2 + w2)];
+	  for (int c = 0; c < channels; ++c) {
+	    pos2[0] = pos1[0];
+	    pos1 += Width1 * Height1;
+	    pos2 += Width2 * Height2;
+	  }
+	}
       }
     }
     return;
@@ -59,26 +59,26 @@ void caffe_cpu_interp2(const int channels,
       const Dtype w1lambda = w1r - w1;
       const Dtype w0lambda = Dtype(1.) - w1lambda;
       if (packed) {
-        const Dtype* pos1 = &data1[channels * ((y1 + h1) * Width1 + (x1 + w1))];
-        Dtype* pos2 = &data2[channels * ((y2 + h2) * Width2 + (x2 + w2))];
-        for (int c = 0; c < channels; ++c) {
-          pos2[0] =
-            h0lambda * (w0lambda * pos1[0]            + w1lambda * pos1[channels * w1p]) + 
-            h1lambda * (w0lambda * pos1[channels * h1p * Width1] + w1lambda * pos1[channels * (h1p * Width1 + w1p)]);
-          pos1++;
-          pos2++;
-        }
+	const Dtype* pos1 = &data1[channels * ((y1 + h1) * Width1 + (x1 + w1))];
+	Dtype* pos2 = &data2[channels * ((y2 + h2) * Width2 + (x2 + w2))];
+	for (int c = 0; c < channels; ++c) {
+	  pos2[0] =
+	    h0lambda * (w0lambda * pos1[0]            + w1lambda * pos1[channels * w1p]) + 
+	    h1lambda * (w0lambda * pos1[channels * h1p * Width1] + w1lambda * pos1[channels * (h1p * Width1 + w1p)]);
+	  pos1++;
+	  pos2++;
+	}
       }
       else {
-        const Dtype* pos1 = &data1[(y1 + h1) * Width1 + (x1 + w1)];
-        Dtype* pos2 = &data2[(y2 + h2) * Width2 + (x2 + w2)];
-        for (int c = 0; c < channels; ++c) {
-          pos2[0] =
-            h0lambda * (w0lambda * pos1[0]            + w1lambda * pos1[w1p]) + 
-            h1lambda * (w0lambda * pos1[h1p * Width1] + w1lambda * pos1[h1p * Width1 + w1p]);
-          pos1 += Width1 * Height1;
-          pos2 += Width2 * Height2;
-        }
+	const Dtype* pos1 = &data1[(y1 + h1) * Width1 + (x1 + w1)];
+	Dtype* pos2 = &data2[(y2 + h2) * Width2 + (x2 + w2)];
+	for (int c = 0; c < channels; ++c) {
+	  pos2[0] =
+	    h0lambda * (w0lambda * pos1[0]            + w1lambda * pos1[w1p]) + 
+	    h1lambda * (w0lambda * pos1[h1p * Width1] + w1lambda * pos1[h1p * Width1 + w1p]);
+	  pos1 += Width1 * Height1;
+	  pos2 += Width2 * Height2;
+	}
       }
     }
   }
@@ -97,25 +97,25 @@ void caffe_cpu_interp2_backward(const int channels,
     for (int h2 = 0; h2 < height2; ++h2) {
       const int h1 = h2;
       for (int w2 = 0; w2 < width2; ++w2) {
-        const int w1 = w2;
-        if (packed) {
-          Dtype* pos1 = &data1[channels * ((y1 + h1) * Width1 + (x1 + w1))];
-          const Dtype* pos2 = &data2[channels * ((y2 + h2) * Width2 + (x2 + w2))];
-          for (int c = 0; c < channels; ++c) {
-            pos1[0] += pos2[0];
-            pos1++;
-            pos2++;
-          }
-        }
-        else {
-          Dtype* pos1 = &data1[(y1 + h1) * Width1 + (x1 + w1)];
-          const Dtype* pos2 = &data2[(y2 + h2) * Width2 + (x2 + w2)];
-          for (int c = 0; c < channels; ++c) {
-            pos1[0] += pos2[0];
-            pos1 += Width1 * Height1;
-            pos2 += Width2 * Height2;
-          }
-        }
+	const int w1 = w2;
+	if (packed) {
+	  Dtype* pos1 = &data1[channels * ((y1 + h1) * Width1 + (x1 + w1))];
+	  const Dtype* pos2 = &data2[channels * ((y2 + h2) * Width2 + (x2 + w2))];
+	  for (int c = 0; c < channels; ++c) {
+	    pos1[0] += pos2[0];
+	    pos1++;
+	    pos2++;
+	  }
+	}
+	else {
+	  Dtype* pos1 = &data1[(y1 + h1) * Width1 + (x1 + w1)];
+	  const Dtype* pos2 = &data2[(y2 + h2) * Width2 + (x2 + w2)];
+	  for (int c = 0; c < channels; ++c) {
+	    pos1[0] += pos2[0];
+	    pos1 += Width1 * Height1;
+	    pos2 += Width2 * Height2;
+	  }
+	}
       }
     }
     return;
@@ -135,28 +135,28 @@ void caffe_cpu_interp2_backward(const int channels,
       const Dtype w1lambda = w1r - w1;
       const Dtype w0lambda = Dtype(1.) - w1lambda;
       if (packed) {
-        Dtype* pos1 = &data1[channels * ((y1 + h1) * Width1 + (x1 + w1))];
-        const Dtype* pos2 = &data2[channels * ((y2 + h2) * Width2 + (x2 + w2))];
-        for (int c = 0; c < channels; ++c) {
-          pos1[0] += h0lambda * w0lambda * pos2[0];
-          pos1[channels * w1p] += h0lambda * w1lambda * pos2[0];
-          pos1[channels * h1p * Width1] += h1lambda * w0lambda * pos2[0];
-          pos1[channels * (h1p * Width1 + w1p)] += h1lambda * w1lambda * pos2[0];
-          pos1++;
-          pos2++;
-        }
+	Dtype* pos1 = &data1[channels * ((y1 + h1) * Width1 + (x1 + w1))];
+	const Dtype* pos2 = &data2[channels * ((y2 + h2) * Width2 + (x2 + w2))];
+	for (int c = 0; c < channels; ++c) {
+	  pos1[0] += h0lambda * w0lambda * pos2[0];
+	  pos1[channels * w1p] += h0lambda * w1lambda * pos2[0];
+	  pos1[channels * h1p * Width1] += h1lambda * w0lambda * pos2[0];
+	  pos1[channels * (h1p * Width1 + w1p)] += h1lambda * w1lambda * pos2[0];
+	  pos1++;
+	  pos2++;
+	}
       }
       else {
-        Dtype* pos1 = &data1[(y1 + h1) * Width1 + (x1 + w1)];
-        const Dtype* pos2 = &data2[(y2 + h2) * Width2 + (x2 + w2)];
-        for (int c = 0; c < channels; ++c) {
-          pos1[0] += h0lambda * w0lambda * pos2[0];
-          pos1[w1p] += h0lambda * w1lambda * pos2[0];
-          pos1[h1p * Width1] += h1lambda * w0lambda * pos2[0];
-          pos1[h1p * Width1 + w1p] += h1lambda * w1lambda * pos2[0];
-          pos1 += Width1 * Height1;
-          pos2 += Width2 * Height2;
-        }
+	Dtype* pos1 = &data1[(y1 + h1) * Width1 + (x1 + w1)];
+	const Dtype* pos2 = &data2[(y2 + h2) * Width2 + (x2 + w2)];
+	for (int c = 0; c < channels; ++c) {
+	  pos1[0] += h0lambda * w0lambda * pos2[0];
+	  pos1[w1p] += h0lambda * w1lambda * pos2[0];
+	  pos1[h1p * Width1] += h1lambda * w0lambda * pos2[0];
+	  pos1[h1p * Width1 + w1p] += h1lambda * w1lambda * pos2[0];
+	  pos1 += Width1 * Height1;
+	  pos2 += Width2 * Height2;
+	}
       }
     }
   }
@@ -182,29 +182,29 @@ void caffe_cpu_pyramid2(const int channels,
     for (int h2 = 0; h2 < height2; ++h2) {
       const int h1 = 2 * h2;
       for (int w2 = 0; w2 < width2; ++w2) {
-        const int w1 = 2 * w2;
-        if (packed) {
-          const Dtype* pos1 = &data1[channels * (h1 * width1 + w1)];
-          Dtype* pos2 = &data2[channels * (h2 * width2 + w2)];
-          for (int c = 0; c < channels; ++c) {
-            pos2[0] =  static_cast<Dtype>(.25) *
-              (pos1[0]                 + pos1[channels] + 
-               pos1[channels * width1] + pos1[channels * (width1 + 1)]);
-            pos1++;
-            pos2++;
-          }
-        }
-        else {
-          const Dtype* pos1 = &data1[h1 * width1 + w1];
-          Dtype* pos2 = &data2[h2 * width2 + w2];
-          for (int c = 0; c < channels; ++c) {
-            pos2[0] =  static_cast<Dtype>(.25) *
-              (pos1[0]      + pos1[1] + 
-               pos1[width1] + pos1[width1 + 1]);
-            pos1 += width1 * height1;
-            pos2 += width2 * height2;
-          }
-        }
+	const int w1 = 2 * w2;
+	if (packed) {
+	  const Dtype* pos1 = &data1[channels * (h1 * width1 + w1)];
+	  Dtype* pos2 = &data2[channels * (h2 * width2 + w2)];
+	  for (int c = 0; c < channels; ++c) {
+	    pos2[0] =  static_cast<Dtype>(.25) *
+	      (pos1[0]                 + pos1[channels] + 
+	       pos1[channels * width1] + pos1[channels * (width1 + 1)]);
+	    pos1++;
+	    pos2++;
+	  }
+	}
+	else {
+	  const Dtype* pos1 = &data1[h1 * width1 + w1];
+	  Dtype* pos2 = &data2[h2 * width2 + w2];
+	  for (int c = 0; c < channels; ++c) {
+	    pos2[0] =  static_cast<Dtype>(.25) *
+	      (pos1[0]      + pos1[1] + 
+	       pos1[width1] + pos1[width1 + 1]);
+	    pos1 += width1 * height1;
+	    pos2 += width2 * height2;
+	  }
+	}
       }
     }
     data1 = data2;
@@ -214,140 +214,6 @@ void caffe_cpu_pyramid2(const int channels,
   }
 }
 
-
-// Nearest neighbor interpolation
-// IN : [channels height1 width1] cropped from a bigger [Height1 Width1] image
-// OUT: [channels height2 width2] cropped from a bigger [Height2 Width2] image
-
-template <typename Dtype, bool packed>
-void caffe_cpu_nninterp2(const int channels,
-    const Dtype *data1, const int x1, const int y1, const int height1, const int width1, const int Height1, const int Width1,
-    Dtype *data2, const int x2, const int y2, const int height2, const int width2, const int Height2, const int Width2) {
-  CHECK(x1 >= 0 && y1 >= 0 && height1 > 0 && width1 > 0 && x2 >= 0 && y2 >= 0 && height2 > 0 && width2 > 0);
-  CHECK(Width1 >= width1 + x1 && Height1 >= height1 + y1 && Width2 >= width2 + x2 && Height2 >= height2 + y2);
-  // special case: just copy
-  if (height1 == height2 && width1 == width2) {
-    for (int h2 = 0; h2 < height2; ++h2) {
-      const int h1 = h2;
-      for (int w2 = 0; w2 < width2; ++w2) {
-        const int w1 = w2;
-        if (packed) {
-          const Dtype* pos1 = &data1[channels * ((y1 + h1) * Width1 + (x1 + w1))];
-          Dtype* pos2 = &data2[channels * ((y2 + h2) * Width2 + (x2 + w2))];
-          for (int c = 0; c < channels; ++c) {
-            pos2[0] = pos1[0];
-            pos1++;
-            pos2++;
-          }
-        }
-        else {
-          const Dtype* pos1 = &data1[(y1 + h1) * Width1 + (x1 + w1)];
-          Dtype* pos2 = &data2[(y2 + h2) * Width2 + (x2 + w2)];
-          for (int c = 0; c < channels; ++c) {
-            pos2[0] = pos1[0];
-            pos1 += Width1 * Height1;
-            pos2 += Width2 * Height2;
-          }
-        }
-      }
-    }
-    return;
-  }
-
-  const float rheight = (height2 > 1) ? static_cast<float>(height1 - 1) / (height2 - 1) : 0.f;
-  const float rwidth = (width2 > 1) ? static_cast<float>(width1 - 1) / (width2 - 1) : 0.f;
-  for (int h2 = 0; h2 < height2; ++h2) {
-    const float h1r = rheight * h2;
-    const int h1 = floor(h1r + 0.5);
-    for (int w2 = 0; w2 < width2; ++w2) {
-      const float w1r = rwidth * w2;
-      const int w1 = floor(w1r + 0.5);
-      if (packed) {
-        const Dtype* pos1 = &data1[channels * ((y1 + h1) * Width1 + (x1 + w1))];
-        Dtype* pos2 = &data2[channels * ((y2 + h2) * Width2 + (x2 + w2))];
-        for (int c = 0; c < channels; ++c) {
-          pos2[0] = pos1[0];
-          pos1++;
-          pos2++;
-        }
-      }
-      else {
-        const Dtype* pos1 = &data1[(y1 + h1) * Width1 + (x1 + w1)];
-        Dtype* pos2 = &data2[(y2 + h2) * Width2 + (x2 + w2)];
-        for (int c = 0; c < channels; ++c) {
-          pos2[0] = pos1[0];
-          pos1 += Width1 * Height1;
-          pos2 += Width2 * Height2;
-        }
-      }
-    }
-  }
-}
-
-template <typename Dtype, bool packed>
-void caffe_cpu_nninterp2_backward(const int channels,
-    Dtype *data1, const int x1, const int y1, const int height1, const int width1, const int Height1, const int Width1,
-    const Dtype *data2, const int x2, const int y2, const int height2, const int width2, const int Height2, const int Width2) {
-  CHECK(x1 >= 0 && y1 >= 0 && height1 > 0 && width1 > 0 && x2 >= 0 && y2 >= 0 && height2 > 0 && width2 > 0);
-  CHECK(Width1 >= width1 + x1 && Height1 >= height1 + y1 && Width2 >= width2 + x2 && Height2 >= height2 + y2);
-  // special case: same-size matching grids
-  if (height1 == height2 && width1 == width2) {
-    for (int h2 = 0; h2 < height2; ++h2) {
-      const int h1 = h2;
-      for (int w2 = 0; w2 < width2; ++w2) {
-        const int w1 = w2;
-        if (packed) {
-          Dtype* pos1 = &data1[channels * ((y1 + h1) * Width1 + (x1 + w1))];
-          const Dtype* pos2 = &data2[channels * ((y2 + h2) * Width2 + (x2 + w2))];
-          for (int c = 0; c < channels; ++c) {
-            pos1[0] += pos2[0];
-            pos1++;
-            pos2++;
-          }
-        }
-        else {
-          Dtype* pos1 = &data1[(y1 + h1) * Width1 + (x1 + w1)];
-          const Dtype* pos2 = &data2[(y2 + h2) * Width2 + (x2 + w2)];
-          for (int c = 0; c < channels; ++c) {
-            pos1[0] += pos2[0];
-            pos1 += Width1 * Height1;
-            pos2 += Width2 * Height2;
-          }
-        }
-      }
-    }
-    return;
-  }
-  
-  const float rheight = (height2 > 1) ? static_cast<float>(height1 - 1) / (height2 - 1) : 0.f;
-  const float rwidth = (width2 > 1) ? static_cast<float>(width1 - 1) / (width2 - 1) : 0.f;
-  for (int h2 = 0; h2 < height2; ++h2) {
-    const float h1r = rheight * h2;
-    const int h1 = floor(h1r + 0.5);
-    for (int w2 = 0; w2 < width2; ++w2) {
-      const float w1r = rwidth * w2;
-      const int w1 = floor(w1r + 0.5);
-      if (packed) {
-        Dtype* pos1 = &data1[channels * ((y1 + h1) * Width1 + (x1 + w1))];
-        const Dtype* pos2 = &data2[channels * ((y2 + h2) * Width2 + (x2 + w2))];
-        for (int c = 0; c < channels; ++c) {
-          pos1[0] += pos2[0];
-          pos1++;
-          pos2++;
-        }
-      }
-      else {
-        Dtype* pos1 = &data1[(y1 + h1) * Width1 + (x1 + w1)];
-        const Dtype* pos2 = &data2[(y2 + h2) * Width2 + (x2 + w2)];
-        for (int c = 0; c < channels; ++c) {
-          pos1[0] += pos2[0];
-          pos1 += Width1 * Height1;
-          pos2 += Width2 * Height2;
-        }
-      }
-    }
-  }
-}
   /*
 template <typename Dtype, bool packed>
 void caffe_cpu_mosaic(const int channels,
@@ -365,19 +231,19 @@ void caffe_cpu_mosaic(const int channels,
     level = std::max(0, std::min(levels, level));
     if (data_pyr == 0 || level == 0) {
       caffe_cpu_interp2<Dtype,packed>(channels,
-    data1, rect1.x(), rect1.y(), rect1.height(), rect1.width(), mosaic_params1.height(), mosaic_params1.width(),
-    data2, rect2.x(), rect2.y(), rect2.height(), rect2.width(), mosaic_params2.height(), mosaic_params2.width());
+	  data1, rect1.x(), rect1.y(), rect1.height(), rect1.width(), mosaic_params1.height(), mosaic_params1.width(),
+	  data2, rect2.x(), rect2.y(), rect2.height(), rect2.width(), mosaic_params2.height(), mosaic_params2.width());
     }
     else {
       const Dtype *data_pyr_l = data_pyr;
       int factor = 2;
       for (int l = 1; l < level; ++l) {
-  data_pyr_l += channels * (mosaic_params1.height() / factor) * (mosaic_params1.width() / factor);
-  factor *= 2;
+	data_pyr_l += channels * (mosaic_params1.height() / factor) * (mosaic_params1.width() / factor);
+	factor *= 2;
       }
       caffe_cpu_interp2<Dtype,packed>(channels,
-    data_pyr_l, rect1.x() / factor, rect1.y() / factor, rect1.height() / factor, rect1.width() / factor, mosaic_params1.height() / factor, mosaic_params1.width() / factor,
-    data2, rect2.x(), rect2.y(), rect2.height(), rect2.width(), mosaic_params2.height(), mosaic_params2.width());      
+	  data_pyr_l, rect1.x() / factor, rect1.y() / factor, rect1.height() / factor, rect1.width() / factor, mosaic_params1.height() / factor, mosaic_params1.width() / factor,
+	  data2, rect2.x(), rect2.y(), rect2.height(), rect2.width(), mosaic_params2.height(), mosaic_params2.width());      
     }
   }
 }
@@ -398,19 +264,19 @@ void caffe_gpu_mosaic(const int channels,
     level = std::max(0, std::min(levels, level));
     if (data_pyr == 0 || level == 0) {
       caffe_gpu_interp2<Dtype,packed>(channels,
-    data1, rect1.x(), rect1.y(), rect1.height(), rect1.width(), mosaic_params1.height(), mosaic_params1.width(),
-    data2, rect2.x(), rect2.y(), rect2.height(), rect2.width(), mosaic_params2.height(), mosaic_params2.width());
+	  data1, rect1.x(), rect1.y(), rect1.height(), rect1.width(), mosaic_params1.height(), mosaic_params1.width(),
+	  data2, rect2.x(), rect2.y(), rect2.height(), rect2.width(), mosaic_params2.height(), mosaic_params2.width());
     }
     else {
       const Dtype *data_pyr_l = data_pyr;
       int factor = 2;
       for (int l = 1; l < level; ++l) {
-  data_pyr_l += channels * (mosaic_params1.height() / factor) * (mosaic_params1.width() / factor);
-  factor *= 2;
+	data_pyr_l += channels * (mosaic_params1.height() / factor) * (mosaic_params1.width() / factor);
+	factor *= 2;
       }
       caffe_gpu_interp2<Dtype,packed>(channels,
-    data_pyr_l, rect1.x() / factor, rect1.y() / factor, rect1.height() / factor, rect1.width() / factor, mosaic_params1.height() / factor, mosaic_params1.width() / factor,
-    data2, rect2.x(), rect2.y(), rect2.height(), rect2.width(), mosaic_params2.height(), mosaic_params2.width());      
+	  data_pyr_l, rect1.x() / factor, rect1.y() / factor, rect1.height() / factor, rect1.width() / factor, mosaic_params1.height() / factor, mosaic_params1.width() / factor,
+	  data2, rect2.x(), rect2.y(), rect2.height(), rect2.width(), mosaic_params2.height(), mosaic_params2.width());      
     }
   }
 }
@@ -431,13 +297,6 @@ template void caffe_cpu_pyramid2<float,true>(const int, const float *, const int
 template void caffe_cpu_pyramid2<double,false>(const int, const double *, const int, const int, double *, const int);
 template void caffe_cpu_pyramid2<double,true>(const int, const double *, const int, const int, double *, const int);
 
-template void caffe_cpu_nninterp2<float,false>(const int, const float *, const int, const int, const int, const int, const int, const int, float *, const int, const int, const int, const int, const int, const int);
-template void caffe_cpu_nninterp2<float,true>(const int, const float *, const int, const int, const int, const int, const int, const int, float *, const int, const int, const int, const int, const int, const int);
-template void caffe_cpu_nninterp2<double,false>(const int, const double *, const int, const int, const int, const int, const int, const int, double *, const int, const int, const int, const int, const int, const int);
-template void caffe_cpu_nninterp2<double,true>(const int, const double *, const int, const int, const int, const int, const int, const int, double *, const int, const int, const int, const int, const int, const int);
-
-template void caffe_cpu_nninterp2_backward<float,false>(const int, float *, const int, const int, const int, const int, const int, const int, const float *, const int, const int, const int, const int, const int, const int);
-template void caffe_cpu_nninterp2_backward<double,false>(const int, double *, const int, const int, const int, const int, const int, const int, const double *, const int, const int, const int, const int, const int, const int);
   /*
 template void caffe_cpu_mosaic<float,false>(const int, const float *, const MosaicParameter, const float *, const int, float *, const MosaicParameter);
 template void caffe_cpu_mosaic<float,true>(const int, const float *, const MosaicParameter, const float *, const int, float *, const MosaicParameter);

@@ -1,4 +1,6 @@
+#include <boost/thread.hpp>
 #include <glog/logging.h>
+#include <cmath>
 #include <cstdio>
 #include <ctime>
 
@@ -7,10 +9,18 @@
 
 namespace caffe {
 
-shared_ptr<Caffe> Caffe::singleton_;
+// Make sure each thread can have different values.
+static boost::thread_specific_ptr<Caffe> thread_instance_;
+
+Caffe& Caffe::Get() {
+  if (!thread_instance_.get()) {
+    thread_instance_.reset(new Caffe());
+  }
+  return *(thread_instance_.get());
+}
 
 // random seeding
-int64_t cluster_seedgen(bool sync) {
+int64_t cluster_seedgen(void) {
   int64_t s, seed, pid;
   FILE* f = fopen("/dev/urandom", "rb");
   if (f && fread(&seed, 1, sizeof(seed), f) == sizeof(seed)) {
@@ -25,113 +35,25 @@ int64_t cluster_seedgen(bool sync) {
 
   pid = getpid();
   s = time(NULL);
-  seed = abs(((s * 181) * ((pid - 83) * 359)) % 104729);
+  seed = std::abs(((s * 181) * ((pid - 83) * 359)) % 104729);
   return seed;
 }
 
 
 void GlobalInit(int* pargc, char*** pargv) {
-
   // Google flags.
   ::gflags::ParseCommandLineFlags(pargc, pargv, true);
   // Google logging.
   ::google::InitGoogleLogging(*(pargv)[0]);
   // Provide a backtrace on segfault.
   ::google::InstallFailureSignalHandler();
-
-#ifdef USE_MPI
-  //try start MPI communication system
-  int provided_thread_support;
-  MPI_Init_thread(pargc, pargv, MPI_THREAD_MULTIPLE, &provided_thread_support);
-
-  CHECK_GE(provided_thread_support, MPI_THREAD_SERIALIZED)<<" Cannot activate MPI thread support";
-
-  Caffe::MPI_build_rank();
-
-  if (Caffe::MPI_all_rank() > 1) {
-    Caffe::set_parallel_mode(Caffe::MPI);
-    LOG(INFO)<<"Running parallel training with MPI support!";
-  }else{
-    Caffe::set_parallel_mode(Caffe::NO);
-    LOG(INFO)<<"You are running caffe compiled with MPI support. Now it's running in non-parallel model";
-  }
-
-  //disable slave processes from logging to stderr
-  //also enable logging only events above ERROR level to logfile.
-  if (Caffe::MPI_my_rank() != 0){
-    FLAGS_logtostderr = false;
-    FLAGS_minloglevel = 2;
-  }
-  
-  int thread_id=0,thread_num=0,node_num=0,gpus_per_node=0;
-  int color = 0, key = 0, count = 0, name_size = 0;
-  MPI_Comm_rank(MPI_COMM_WORLD, &thread_id);
-  MPI_Comm_size(MPI_COMM_WORLD, &thread_num);
-
-  char node_name[MPI::MAX_PROCESSOR_NAME];
-  MPI::Get_processor_name(node_name, name_size);
-  char *all_node_name = (char *)malloc(sizeof(char) * MPI::MAX_PROCESSOR_NAME * thread_num);
-  MPI_Allgather(node_name,MPI::MAX_PROCESSOR_NAME,MPI_CHAR,all_node_name,
-      MPI::MAX_PROCESSOR_NAME,MPI_CHAR,MPI_COMM_WORLD); 
-  MPI_Comm dup_comm, sub_comm;
-  for(int i = 0; i < thread_num; i++){
-    if (i == 0) node_num = 1;
-    else if(strcmp(all_node_name + MPI::MAX_PROCESSOR_NAME * i,all_node_name + MPI::MAX_PROCESSOR_NAME * (i - 1)) != 0){
-      node_num++;
-    }
-  }
-  for(int i = 0; i < thread_num; i++){
-    if(strcmp(node_name,all_node_name + MPI::MAX_PROCESSOR_NAME * i) == 0)
-    {
-       if(count == 0)
-           color = i;
-       if(i == thread_id)
-       {
-         key = count;
-         break;
-       }
-       count++;
-    }
-  }
-
-  MPI_Comm_dup(MPI_COMM_WORLD,&dup_comm);
-  MPI_Comm_split(dup_comm,color,key,&sub_comm);
-
-  int sub_thread_num = 0, _MIN_sub_thread_id = 0;
-  MPI_Comm_size(sub_comm, &sub_thread_num);
-  MPI_Allreduce(&thread_id, &_MIN_sub_thread_id, 1, MPI_INT, MPI_MIN, sub_comm);
-
-  LOG(INFO)<<"_MIN sub thread id:"<<_MIN_sub_thread_id<<" node name:"<<node_name;
-
-  CUDA_CHECK(cudaGetDeviceCount(&gpus_per_node));
-  if(FLAGS_gpu >=0 && FLAGS_gpu <= gpus_per_node) {
-    FLAGS_gpu += (thread_id - _MIN_sub_thread_id);
-    LOG(INFO)<<"FLAGS_gpu:"<<FLAGS_gpu;
-    Caffe::SetDevice(FLAGS_gpu);
-    Caffe::set_mode(Caffe::GPU);
-  }
-
-  Caffe::setGPUId(FLAGS_gpu);
-
-  Caffe::setThreadId(thread_id);
-  Caffe::setThreadNum(thread_num); 
-  Caffe::setNodeNum(node_num);
-#endif
-
-}
-
-void GlobalFinalize(){
-  //Add something here
-
-  #ifdef USE_MPI
-  MPI_Finalize();
-  #endif
 }
 
 #ifdef CPU_ONLY  // CPU-only Caffe.
 
 Caffe::Caffe()
-    : random_generator_(), mode_(Caffe::CPU) { }
+    : random_generator_(), mode_(Caffe::CPU),
+      solver_count_(1), root_solver_(true) { }
 
 Caffe::~Caffe() { }
 
@@ -175,8 +97,7 @@ void* Caffe::RNG::generator() {
 
 Caffe::Caffe()
     : cublas_handle_(NULL), curand_generator_(NULL), random_generator_(),
-    mode_(Caffe::CPU) {
-  #ifndef USE_MPI
+    mode_(Caffe::CPU), solver_count_(1), root_solver_(true) {
   // Try to create a cublas handler, and report an error if failed (but we will
   // keep the program running as one might just want to run CPU code).
   if (cublasCreate(&cublas_handle_) != CUBLAS_STATUS_SUCCESS) {
@@ -189,19 +110,6 @@ Caffe::Caffe()
       != CURAND_STATUS_SUCCESS) {
     LOG(ERROR) << "Cannot create Curand generator. Curand won't be available.";
   }
-  #else
-  // we are not trying to create the any cuda stuff here
-  // because on exclusive mode GPUs it will cause program fail
-  // Reason: no device id assigned at this time, all processes will try to access gpu 0.
-  #endif
-
-  #ifdef USE_CUDNN
-    cudnn_mem_richness_ = 1;
-  #endif
-
-  #ifdef WITH_PYTHON_LAYER
-  py_tstate_ = NULL;
-  #endif
 }
 
 Caffe::~Caffe() {
@@ -231,9 +139,8 @@ void Caffe::set_random_seed(const unsigned int seed) {
 
 void Caffe::SetDevice(const int device_id) {
   int current_device;
-  std::cout<<"Setting device "<<device_id<<"\n";
   CUDA_CHECK(cudaGetDevice(&current_device));
-  if (current_device == device_id && Get().cublas_handle_ && Get().curand_generator_) {
+  if (current_device == device_id) {
     return;
   }
   // The call to cudaSetDevice must come before any calls to Get, which
@@ -248,9 +155,6 @@ void Caffe::SetDevice(const int device_id) {
       CURAND_RNG_PSEUDO_DEFAULT));
   CURAND_CHECK(curandSetPseudoRandomGeneratorSeed(Get().curand_generator_,
       cluster_seedgen()));
-#ifdef USE_MPI
-  Get().device_id_ = device_id;
-#endif
 }
 
 void Caffe::DeviceQuery() {

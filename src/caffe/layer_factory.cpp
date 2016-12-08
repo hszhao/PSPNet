@@ -1,16 +1,34 @@
+// Make sure we include Python.h before any system header
+// to avoid _POSIX_C_SOURCE redefinition
+#ifdef WITH_PYTHON_LAYER
+#include <boost/python.hpp>
+#endif
 #include <string>
 
 #include "caffe/layer.hpp"
 #include "caffe/layer_factory.hpp"
+#include "caffe/layers/conv_layer.hpp"
+#include "caffe/layers/lrn_layer.hpp"
+#include "caffe/layers/pooling_layer.hpp"
+#include "caffe/layers/relu_layer.hpp"
+#include "caffe/layers/sigmoid_layer.hpp"
+#include "caffe/layers/softmax_layer.hpp"
+#include "caffe/layers/tanh_layer.hpp"
 #include "caffe/proto/caffe.pb.h"
-#include "caffe/vision_layers.hpp"
-
-#ifdef WITH_PYTHON_LAYER
-#include "caffe/python_layer.hpp"
-#endif
 
 #ifdef USE_CUDNN
-#include "caffe/util/cudnn.hpp"
+#include "caffe/layers/cudnn_conv_layer.hpp"
+#include "caffe/layers/cudnn_lcn_layer.hpp"
+#include "caffe/layers/cudnn_lrn_layer.hpp"
+#include "caffe/layers/cudnn_pooling_layer.hpp"
+#include "caffe/layers/cudnn_relu_layer.hpp"
+#include "caffe/layers/cudnn_sigmoid_layer.hpp"
+#include "caffe/layers/cudnn_softmax_layer.hpp"
+#include "caffe/layers/cudnn_tanh_layer.hpp"
+#endif
+
+#ifdef WITH_PYTHON_LAYER
+#include "caffe/layers/python_layer.hpp"
 #endif
 
 namespace caffe {
@@ -19,17 +37,32 @@ namespace caffe {
 template <typename Dtype>
 shared_ptr<Layer<Dtype> > GetConvolutionLayer(
     const LayerParameter& param) {
-  ConvolutionParameter_Engine engine = param.convolution_param().engine();
+  ConvolutionParameter conv_param = param.convolution_param();
+  ConvolutionParameter_Engine engine = conv_param.engine();
+#ifdef USE_CUDNN
+  bool use_dilation = false;
+  for (int i = 0; i < conv_param.dilation_size(); ++i) {
+    if (conv_param.dilation(i) > 1) {
+      use_dilation = true;
+    }
+  }
+#endif
   if (engine == ConvolutionParameter_Engine_DEFAULT) {
     engine = ConvolutionParameter_Engine_CAFFE;
 #ifdef USE_CUDNN
-    engine = ConvolutionParameter_Engine_CUDNN;
+    if (!use_dilation) {
+      engine = ConvolutionParameter_Engine_CUDNN;
+    }
 #endif
   }
   if (engine == ConvolutionParameter_Engine_CAFFE) {
     return shared_ptr<Layer<Dtype> >(new ConvolutionLayer<Dtype>(param));
 #ifdef USE_CUDNN
   } else if (engine == ConvolutionParameter_Engine_CUDNN) {
+    if (use_dilation) {
+      LOG(FATAL) << "CuDNN doesn't support the dilated convolution at Layer "
+                 << param.name();
+    }
     return shared_ptr<Layer<Dtype> >(new CuDNNConvolutionLayer<Dtype>(param));
 #endif
   } else {
@@ -53,14 +86,21 @@ shared_ptr<Layer<Dtype> > GetPoolingLayer(const LayerParameter& param) {
     return shared_ptr<Layer<Dtype> >(new PoolingLayer<Dtype>(param));
 #ifdef USE_CUDNN
   } else if (engine == PoolingParameter_Engine_CUDNN) {
-    PoolingParameter p_param = param.pooling_param();
-    if (p_param.pad() || p_param.pad_h() || p_param.pad_w() ||
-        param.top_size() > 1) {
-      LOG(INFO) << "CUDNN does not support padding or multiple tops. "
+    if (param.top_size() > 1) {
+      LOG(INFO) << "cuDNN does not support multiple tops. "
                 << "Using Caffe's own pooling layer.";
       return shared_ptr<Layer<Dtype> >(new PoolingLayer<Dtype>(param));
     }
-    return shared_ptr<Layer<Dtype> >(new CuDNNPoolingLayer<Dtype>(param));
+    // CuDNN assumes layers are not being modified in place, thus
+    // breaking our index tracking for updates in some cases in Caffe.
+    // Until there is a workaround in Caffe (index management) or
+    // cuDNN, use Caffe layer to max pooling, or don't use in place
+    // layers after max pooling layers
+    if (param.pooling_param().pool() == PoolingParameter_PoolMethod_MAX) {
+        return shared_ptr<Layer<Dtype> >(new PoolingLayer<Dtype>(param));
+    } else {
+        return shared_ptr<Layer<Dtype> >(new CuDNNPoolingLayer<Dtype>(param));
+    }
 #endif
   } else {
     LOG(FATAL) << "Layer " << param.name() << " has unknown engine.";
@@ -68,6 +108,43 @@ shared_ptr<Layer<Dtype> > GetPoolingLayer(const LayerParameter& param) {
 }
 
 REGISTER_LAYER_CREATOR(Pooling, GetPoolingLayer);
+
+// Get LRN layer according to engine
+template <typename Dtype>
+shared_ptr<Layer<Dtype> > GetLRNLayer(const LayerParameter& param) {
+  LRNParameter_Engine engine = param.lrn_param().engine();
+
+  if (engine == LRNParameter_Engine_DEFAULT) {
+#ifdef USE_CUDNN
+    engine = LRNParameter_Engine_CUDNN;
+#else
+    engine = LRNParameter_Engine_CAFFE;
+#endif
+  }
+
+  if (engine == LRNParameter_Engine_CAFFE) {
+    return shared_ptr<Layer<Dtype> >(new LRNLayer<Dtype>(param));
+#ifdef USE_CUDNN
+  } else if (engine == LRNParameter_Engine_CUDNN) {
+    LRNParameter lrn_param = param.lrn_param();
+
+    if (lrn_param.norm_region() ==LRNParameter_NormRegion_WITHIN_CHANNEL) {
+      return shared_ptr<Layer<Dtype> >(new CuDNNLCNLayer<Dtype>(param));
+    } else {
+      // local size is too big to be handled through cuDNN
+      if (param.lrn_param().local_size() > CUDNN_LRN_MAX_N) {
+        return shared_ptr<Layer<Dtype> >(new LRNLayer<Dtype>(param));
+      } else {
+        return shared_ptr<Layer<Dtype> >(new CuDNNLRNLayer<Dtype>(param));
+      }
+    }
+#endif
+  } else {
+    LOG(FATAL) << "Layer " << param.name() << " has unknown engine.";
+  }
+}
+
+REGISTER_LAYER_CREATOR(LRN, GetLRNLayer);
 
 // Get relu layer according to engine.
 template <typename Dtype>
@@ -161,50 +238,11 @@ shared_ptr<Layer<Dtype> > GetTanHLayer(const LayerParameter& param) {
 
 REGISTER_LAYER_CREATOR(TanH, GetTanHLayer);
 
-// Get bn layer according to engine.
-template <typename Dtype>
-shared_ptr<Layer<Dtype> > GetBNLayer(const LayerParameter& param) {
-  BNParameter_Engine engine = param.bn_param().engine();
-  if (engine == BNParameter_Engine_DEFAULT) {
-    engine = BNParameter_Engine_CAFFE;
-#if defined(USE_CUDNN)
-#if CUDNN_VERSION_MIN(5, 0, 0)
-     engine = BNParameter_Engine_CUDNN;
-#endif
-#endif
-  }
-  if (engine == BNParameter_Engine_CAFFE) {
-    LOG(INFO) << "Layer " << param.name() << " is using CAFFE engine.";
-    return shared_ptr<Layer<Dtype> >(new BNLayer<Dtype>(param));
-#if defined(USE_CUDNN)
-#if CUDNN_VERSION_MIN(5, 0, 0)
-  } else if (engine == BNParameter_Engine_CUDNN) {
-    LOG(INFO) << "Layer " << param.name() << " is using CUDNN engine.";
-    return shared_ptr<Layer<Dtype> >(new CuDNNBNLayer<Dtype>(param));
-#endif
-#endif
-  } else {
-    LOG(FATAL) << "Layer " << param.name() << " calls cuDNN engine, but cuDNN version higher than 5.0 is not found";
-  }
-}
-
-REGISTER_LAYER_CREATOR(BN, GetBNLayer);
-
 #ifdef WITH_PYTHON_LAYER
-PyThreadState* tstate = NULL;
 template <typename Dtype>
 shared_ptr<Layer<Dtype> > GetPythonLayer(const LayerParameter& param) {
-  boost::lock_guard<boost::mutex> lock(mtx_);
-  if (Caffe::py_tstate() == NULL){
-    Py_Initialize();
-    PyEval_InitThreads();
-    PyThreadState* tstate = PyEval_SaveThread();
-    Caffe::set_py_tstate(tstate);
-  }
-  PyGILState_STATE state;
-  state = PyGILState_Ensure();
+  Py_Initialize();
   try {
-
     bp::object module = bp::import(param.python_param().module().c_str());
     bp::object layer = module.attr(param.python_param().layer().c_str())(param);
     return bp::extract<shared_ptr<PythonLayer<Dtype> > >(layer)();
@@ -212,12 +250,9 @@ shared_ptr<Layer<Dtype> > GetPythonLayer(const LayerParameter& param) {
     PyErr_Print();
     throw;
   }
-  PyGILState_Release(state);
 }
 
 REGISTER_LAYER_CREATOR(Python, GetPythonLayer);
-
-boost::mutex mtx_;
 #endif
 
 // Layers that use their constructor as their default creator should be

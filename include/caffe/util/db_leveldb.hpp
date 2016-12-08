@@ -1,3 +1,4 @@
+#ifdef USE_LEVELDB
 #ifndef CAFFE_UTIL_DB_LEVELDB_HPP
 #define CAFFE_UTIL_DB_LEVELDB_HPP
 
@@ -17,17 +18,12 @@ class LevelDBCursor : public Cursor {
   ~LevelDBCursor() { delete iter_; }
   virtual void SeekToFirst() { iter_->SeekToFirst(); }
   virtual void Next() { iter_->Next(); }
-  virtual string Lookup(string key){Seek(key); return value();};
   virtual string key() { return iter_->key().ToString(); }
   virtual string value() { return iter_->value().ToString(); }
   virtual bool valid() { return iter_->Valid(); }
 
  private:
   leveldb::Iterator* iter_;
-
-  void Seek(string key){
-    iter_->Seek(leveldb::Slice(key.c_str(), key.size()));
-  };
 };
 
 class LevelDBTransaction : public Transaction {
@@ -76,3 +72,4 @@ class LevelDB : public DB {
 }  // namespace caffe
 
 #endif  // CAFFE_UTIL_DB_LEVELDB_HPP
+#endif  // USE_LEVELDB

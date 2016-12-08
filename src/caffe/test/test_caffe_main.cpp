@@ -25,17 +25,16 @@ int main(int argc, char** argv) {
   if (argc > 1) {
     // Use the given device
     device = atoi(argv[1]);
-    caffe::Caffe::SetDevice(0);
+    cudaSetDevice(device);
     cout << "Setting to use device " << device << endl;
   } else if (CUDA_TEST_DEVICE >= 0) {
     // Use the device assigned in build configuration; but with a lower priority
-    caffe::Caffe::SetDevice(CUDA_TEST_DEVICE);
-  } else {
-    caffe::Caffe::SetDevice(0);
+    device = CUDA_TEST_DEVICE;
   }
   cudaGetDevice(&device);
   cout << "Current device id: " << device << endl;
   cudaGetDeviceProperties(&CAFFE_TEST_CUDA_PROP, device);
+  cout << "Current device name: " << CAFFE_TEST_CUDA_PROP.name << endl;
 #endif
   // invoke the test.
   return RUN_ALL_TESTS();

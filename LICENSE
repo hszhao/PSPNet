@@ -1,5 +1,12 @@
 COPYRIGHT
 
+All new contributions compared to the original Caffe branch:
+Copyright (c) 2015, 2016, Liang-Chieh Chen (UCLA, Google), George Papandreou (Google),
+Iasonas Kokkinos (CentraleSupélec /INRIA), Jonathan T. Barron(Google),
+Yi Yang (Baidu), Jiang Wang (Baidu), Wei Xu (Baidu),
+Kevin Murphy (Google), and Alan L. Yuille (UCLA, JHU)
+All rights reserved.
+
 All contributions by the University of California:
 Copyright (c) 2014, 2015, The Regents of the University of California (Regents)
 All rights reserved.

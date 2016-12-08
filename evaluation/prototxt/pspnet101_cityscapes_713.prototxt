@@ -47,16 +47,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -107,16 +107,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -167,16 +167,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -239,16 +239,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -299,16 +299,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -359,16 +359,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -413,16 +413,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -483,16 +483,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -543,16 +543,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -603,16 +603,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -673,16 +673,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -733,16 +733,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -793,16 +793,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -863,16 +863,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -923,16 +923,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -983,16 +983,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -1037,16 +1037,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -1107,16 +1107,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -1167,16 +1167,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -1227,16 +1227,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -1297,16 +1297,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -1357,16 +1357,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -1417,16 +1417,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -1487,16 +1487,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -1547,16 +1547,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -1607,16 +1607,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -1677,16 +1677,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -1697,7 +1697,7 @@ layer {
 }
 layer {
   name: "conv4_1_3x3"
-  type: "HoleConvolution"
+  type: "Convolution"
   bottom: "conv4_1_1x1_reduce"
   top: "conv4_1_3x3"
   param {
@@ -1707,7 +1707,7 @@ layer {
   convolution_param {
     num_output: 256
     pad: 2
-    hole: 2
+    dilation: 2
     kernel_size: 3
     stride: 1
     weight_filler {
@@ -1738,16 +1738,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -1798,16 +1798,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -1852,16 +1852,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -1922,16 +1922,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -1942,7 +1942,7 @@ layer {
 }
 layer {
   name: "conv4_2_3x3"
-  type: "HoleConvolution"
+  type: "Convolution"
   bottom: "conv4_2_1x1_reduce"
   top: "conv4_2_3x3"
   param {
@@ -1952,7 +1952,7 @@ layer {
   convolution_param {
     num_output: 256
     pad: 2
-    hole: 2
+    dilation: 2
     kernel_size: 3
     stride: 1
     weight_filler {
@@ -1983,16 +1983,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -2043,16 +2043,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -2113,16 +2113,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -2133,7 +2133,7 @@ layer {
 }
 layer {
   name: "conv4_3_3x3"
-  type: "HoleConvolution"
+  type: "Convolution"
   bottom: "conv4_3_1x1_reduce"
   top: "conv4_3_3x3"
   param {
@@ -2143,7 +2143,7 @@ layer {
   convolution_param {
     num_output: 256
     pad: 2
-    hole: 2
+    dilation: 2
     kernel_size: 3
     stride: 1
     weight_filler {
@@ -2174,16 +2174,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -2234,16 +2234,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -2304,16 +2304,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -2324,7 +2324,7 @@ layer {
 }
 layer {
   name: "conv4_4_3x3"
-  type: "HoleConvolution"
+  type: "Convolution"
   bottom: "conv4_4_1x1_reduce"
   top: "conv4_4_3x3"
   param {
@@ -2334,7 +2334,7 @@ layer {
   convolution_param {
     num_output: 256
     pad: 2
-    hole: 2
+    dilation: 2
     kernel_size: 3
     stride: 1
     weight_filler {
@@ -2365,16 +2365,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -2425,16 +2425,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -2495,16 +2495,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -2515,7 +2515,7 @@ layer {
 }
 layer {
   name: "conv4_5_3x3"
-  type: "HoleConvolution"
+  type: "Convolution"
   bottom: "conv4_5_1x1_reduce"
   top: "conv4_5_3x3"
   param {
@@ -2525,7 +2525,7 @@ layer {
   convolution_param {
     num_output: 256
     pad: 2
-    hole: 2
+    dilation: 2
     kernel_size: 3
     stride: 1
     weight_filler {
@@ -2556,16 +2556,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -2616,16 +2616,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -2686,16 +2686,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -2706,7 +2706,7 @@ layer {
 }
 layer {
   name: "conv4_6_3x3"
-  type: "HoleConvolution"
+  type: "Convolution"
   bottom: "conv4_6_1x1_reduce"
   top: "conv4_6_3x3"
   param {
@@ -2716,7 +2716,7 @@ layer {
   convolution_param {
     num_output: 256
     pad: 2
-    hole: 2
+    dilation: 2
     kernel_size: 3
     stride: 1
     weight_filler {
@@ -2747,16 +2747,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -2807,16 +2807,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -2877,16 +2877,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -2897,7 +2897,7 @@ layer {
 }
 layer {
   name: "conv4_7_3x3"
-  type: "HoleConvolution"
+  type: "Convolution"
   bottom: "conv4_7_1x1_reduce"
   top: "conv4_7_3x3"
   param {
@@ -2907,7 +2907,7 @@ layer {
   convolution_param {
     num_output: 256
     pad: 2
-    hole: 2
+    dilation: 2
     kernel_size: 3
     stride: 1
     weight_filler {
@@ -2938,16 +2938,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -2998,16 +2998,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -3068,16 +3068,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -3088,7 +3088,7 @@ layer {
 }
 layer {
   name: "conv4_8_3x3"
-  type: "HoleConvolution"
+  type: "Convolution"
   bottom: "conv4_8_1x1_reduce"
   top: "conv4_8_3x3"
   param {
@@ -3098,7 +3098,7 @@ layer {
   convolution_param {
     num_output: 256
     pad: 2
-    hole: 2
+    dilation: 2
     kernel_size: 3
     stride: 1
     weight_filler {
@@ -3129,16 +3129,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -3189,16 +3189,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -3259,16 +3259,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -3279,7 +3279,7 @@ layer {
 }
 layer {
   name: "conv4_9_3x3"
-  type: "HoleConvolution"
+  type: "Convolution"
   bottom: "conv4_9_1x1_reduce"
   top: "conv4_9_3x3"
   param {
@@ -3289,7 +3289,7 @@ layer {
   convolution_param {
     num_output: 256
     pad: 2
-    hole: 2
+    dilation: 2
     kernel_size: 3
     stride: 1
     weight_filler {
@@ -3320,16 +3320,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -3380,16 +3380,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -3450,16 +3450,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -3470,7 +3470,7 @@ layer {
 }
 layer {
   name: "conv4_10_3x3"
-  type: "HoleConvolution"
+  type: "Convolution"
   bottom: "conv4_10_1x1_reduce"
   top: "conv4_10_3x3"
   param {
@@ -3480,7 +3480,7 @@ layer {
   convolution_param {
     num_output: 256
     pad: 2
-    hole: 2
+    dilation: 2
     kernel_size: 3
     stride: 1
     weight_filler {
@@ -3511,16 +3511,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -3571,16 +3571,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -3641,16 +3641,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -3661,7 +3661,7 @@ layer {
 }
 layer {
   name: "conv4_11_3x3"
-  type: "HoleConvolution"
+  type: "Convolution"
   bottom: "conv4_11_1x1_reduce"
   top: "conv4_11_3x3"
   param {
@@ -3671,7 +3671,7 @@ layer {
   convolution_param {
     num_output: 256
     pad: 2
-    hole: 2
+    dilation: 2
     kernel_size: 3
     stride: 1
     weight_filler {
@@ -3702,16 +3702,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -3762,16 +3762,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -3832,16 +3832,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -3852,7 +3852,7 @@ layer {
 }
 layer {
   name: "conv4_12_3x3"
-  type: "HoleConvolution"
+  type: "Convolution"
   bottom: "conv4_12_1x1_reduce"
   top: "conv4_12_3x3"
   param {
@@ -3862,7 +3862,7 @@ layer {
   convolution_param {
     num_output: 256
     pad: 2
-    hole: 2
+    dilation: 2
     kernel_size: 3
     stride: 1
     weight_filler {
@@ -3893,16 +3893,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -3953,16 +3953,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -4023,16 +4023,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -4043,7 +4043,7 @@ layer {
 }
 layer {
   name: "conv4_13_3x3"
-  type: "HoleConvolution"
+  type: "Convolution"
   bottom: "conv4_13_1x1_reduce"
   top: "conv4_13_3x3"
   param {
@@ -4053,7 +4053,7 @@ layer {
   convolution_param {
     num_output: 256
     pad: 2
-    hole: 2
+    dilation: 2
     kernel_size: 3
     stride: 1
     weight_filler {
@@ -4084,16 +4084,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -4144,16 +4144,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -4214,16 +4214,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -4234,7 +4234,7 @@ layer {
 }
 layer {
   name: "conv4_14_3x3"
-  type: "HoleConvolution"
+  type: "Convolution"
   bottom: "conv4_14_1x1_reduce"
   top: "conv4_14_3x3"
   param {
@@ -4244,7 +4244,7 @@ layer {
   convolution_param {
     num_output: 256
     pad: 2
-    hole: 2
+    dilation: 2
     kernel_size: 3
     stride: 1
     weight_filler {
@@ -4275,16 +4275,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -4335,16 +4335,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -4405,16 +4405,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -4425,7 +4425,7 @@ layer {
 }
 layer {
   name: "conv4_15_3x3"
-  type: "HoleConvolution"
+  type: "Convolution"
   bottom: "conv4_15_1x1_reduce"
   top: "conv4_15_3x3"
   param {
@@ -4435,7 +4435,7 @@ layer {
   convolution_param {
     num_output: 256
     pad: 2
-    hole: 2
+    dilation: 2
     kernel_size: 3
     stride: 1
     weight_filler {
@@ -4466,16 +4466,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -4526,16 +4526,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -4596,16 +4596,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -4616,7 +4616,7 @@ layer {
 }
 layer {
   name: "conv4_16_3x3"
-  type: "HoleConvolution"
+  type: "Convolution"
   bottom: "conv4_16_1x1_reduce"
   top: "conv4_16_3x3"
   param {
@@ -4626,7 +4626,7 @@ layer {
   convolution_param {
     num_output: 256
     pad: 2
-    hole: 2
+    dilation: 2
     kernel_size: 3
     stride: 1
     weight_filler {
@@ -4657,16 +4657,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -4717,16 +4717,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -4787,16 +4787,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -4807,7 +4807,7 @@ layer {
 }
 layer {
   name: "conv4_17_3x3"
-  type: "HoleConvolution"
+  type: "Convolution"
   bottom: "conv4_17_1x1_reduce"
   top: "conv4_17_3x3"
   param {
@@ -4817,7 +4817,7 @@ layer {
   convolution_param {
     num_output: 256
     pad: 2
-    hole: 2
+    dilation: 2
     kernel_size: 3
     stride: 1
     weight_filler {
@@ -4848,16 +4848,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -4908,16 +4908,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -4978,16 +4978,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -4998,7 +4998,7 @@ layer {
 }
 layer {
   name: "conv4_18_3x3"
-  type: "HoleConvolution"
+  type: "Convolution"
   bottom: "conv4_18_1x1_reduce"
   top: "conv4_18_3x3"
   param {
@@ -5008,7 +5008,7 @@ layer {
   convolution_param {
     num_output: 256
     pad: 2
-    hole: 2
+    dilation: 2
     kernel_size: 3
     stride: 1
     weight_filler {
@@ -5039,16 +5039,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -5099,16 +5099,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -5169,16 +5169,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -5189,7 +5189,7 @@ layer {
 }
 layer {
   name: "conv4_19_3x3"
-  type: "HoleConvolution"
+  type: "Convolution"
   bottom: "conv4_19_1x1_reduce"
   top: "conv4_19_3x3"
   param {
@@ -5199,7 +5199,7 @@ layer {
   convolution_param {
     num_output: 256
     pad: 2
-    hole: 2
+    dilation: 2
     kernel_size: 3
     stride: 1
     weight_filler {
@@ -5230,16 +5230,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -5290,16 +5290,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -5360,16 +5360,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -5380,7 +5380,7 @@ layer {
 }
 layer {
   name: "conv4_20_3x3"
-  type: "HoleConvolution"
+  type: "Convolution"
   bottom: "conv4_20_1x1_reduce"
   top: "conv4_20_3x3"
   param {
@@ -5390,7 +5390,7 @@ layer {
   convolution_param {
     num_output: 256
     pad: 2
-    hole: 2
+    dilation: 2
     kernel_size: 3
     stride: 1
     weight_filler {
@@ -5421,16 +5421,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -5481,16 +5481,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -5551,16 +5551,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -5571,7 +5571,7 @@ layer {
 }
 layer {
   name: "conv4_21_3x3"
-  type: "HoleConvolution"
+  type: "Convolution"
   bottom: "conv4_21_1x1_reduce"
   top: "conv4_21_3x3"
   param {
@@ -5581,7 +5581,7 @@ layer {
   convolution_param {
     num_output: 256
     pad: 2
-    hole: 2
+    dilation: 2
     kernel_size: 3
     stride: 1
     weight_filler {
@@ -5612,16 +5612,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -5672,16 +5672,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -5742,16 +5742,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -5762,7 +5762,7 @@ layer {
 }
 layer {
   name: "conv4_22_3x3"
-  type: "HoleConvolution"
+  type: "Convolution"
   bottom: "conv4_22_1x1_reduce"
   top: "conv4_22_3x3"
   param {
@@ -5772,7 +5772,7 @@ layer {
   convolution_param {
     num_output: 256
     pad: 2
-    hole: 2
+    dilation: 2
     kernel_size: 3
     stride: 1
     weight_filler {
@@ -5803,16 +5803,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -5863,16 +5863,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -5933,16 +5933,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -5953,7 +5953,7 @@ layer {
 }
 layer {
   name: "conv4_23_3x3"
-  type: "HoleConvolution"
+  type: "Convolution"
   bottom: "conv4_23_1x1_reduce"
   top: "conv4_23_3x3"
   param {
@@ -5963,7 +5963,7 @@ layer {
   convolution_param {
     num_output: 256
     pad: 2
-    hole: 2
+    dilation: 2
     kernel_size: 3
     stride: 1
     weight_filler {
@@ -5994,16 +5994,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -6054,16 +6054,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -6124,16 +6124,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -6144,7 +6144,7 @@ layer {
 }
 layer {
   name: "conv5_1_3x3"
-  type: "HoleConvolution"
+  type: "Convolution"
   bottom: "conv5_1_1x1_reduce"
   top: "conv5_1_3x3"
   param {
@@ -6154,7 +6154,7 @@ layer {
   convolution_param {
     num_output: 512
     pad: 4
-    hole: 4
+    dilation: 4
     kernel_size: 3
     stride: 1
     weight_filler {
@@ -6185,16 +6185,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -6245,16 +6245,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -6299,16 +6299,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -6369,16 +6369,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -6389,7 +6389,7 @@ layer {
 }
 layer {
   name: "conv5_2_3x3"
-  type: "HoleConvolution"
+  type: "Convolution"
   bottom: "conv5_2_1x1_reduce"
   top: "conv5_2_3x3"
   param {
@@ -6399,7 +6399,7 @@ layer {
   convolution_param {
     num_output: 512
     pad: 4
-    hole: 4
+    dilation: 4
     kernel_size: 3
     stride: 1
     weight_filler {
@@ -6430,16 +6430,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -6490,16 +6490,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -6560,16 +6560,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -6580,7 +6580,7 @@ layer {
 }
 layer {
   name: "conv5_3_3x3"
-  type: "HoleConvolution"
+  type: "Convolution"
   bottom: "conv5_3_1x1_reduce"
   top: "conv5_3_3x3"
   param {
@@ -6590,7 +6590,7 @@ layer {
   convolution_param {
     num_output: 512
     pad: 4
-    hole: 4
+    dilation: 4
     kernel_size: 3
     stride: 1
     weight_filler {
@@ -6621,16 +6621,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -6681,16 +6681,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -6761,16 +6761,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -6841,16 +6841,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -6921,16 +6921,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -7001,16 +7001,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {
@@ -7081,16 +7081,16 @@ layer {
     decay_mult: 0
   }
   bn_param {
-    scale_filler {
+    slope_filler {
       type: "constant"
       value: 1
     }
-    shift_filler {
+    bias_filler {
       type: "constant"
       value: 0
     }
-    moving_average: true
-    decay: 0.05
+    frozen: true
+    momentum: 0.95
   }
 }
 layer {

@@ -16,22 +16,11 @@
 #include <utility>  // pair
 #include <vector>
 
-#ifdef USE_MPI
-  #include "mpi.h"
-
-#define MPI_CHECK(cond) \
-do { \
-    int status = cond; \
-    CHECK_EQ(status, MPI_SUCCESS) << " " \
-      << "MPI Error Code: " << status; \
-  } while (0)
-#endif
-
-#ifdef WITH_PYTHON_LAYER
-#include <boost/python.hpp>
-#endif
-
 #include "caffe/util/device_alternate.hpp"
+
+// Convert macro to string
+#define STRINGIFY(m) #m
+#define AS_STRING(m) STRINGIFY(m)
 
 // gflags 2.1 issue: namespace google was changed to gflags without warning.
 // Luckily we will be able to use GFLAGS_GFLAGS_H_ to detect if it is version
@@ -108,23 +97,17 @@ using std::vector;
 // Currently it initializes google flags and google logging.
 void GlobalInit(int* pargc, char*** pargv);
 
-// A global function to clear up remaining stuffs
-void GlobalFinalize();
-
-// Header for system entropy source
-int64_t cluster_seedgen(bool sync=true);
-
-  // A singleton class to hold common caffe stuff, such as the handler that
+// A singleton class to hold common caffe stuff, such as the handler that
 // caffe is going to use for cublas, curand, etc.
 class Caffe {
  public:
   ~Caffe();
-  inline static Caffe& Get() {
-    if (!singleton_.get()) {
-      singleton_.reset(new Caffe());
-    }
-    return *singleton_;
-  }
+
+  // Thread local context for Caffe. Moved to common.cpp instead of
+  // including boost/thread.hpp to avoid a boost/NVCC issues (#1009, #1010)
+  // on OSX. Also fails on Linux with CUDA 7.0.18.
+  static Caffe& Get();
+
   enum Brew { CPU, GPU };
 
   // This random number generator facade hides boost and CUDA rng
@@ -170,58 +153,11 @@ class Caffe {
   static void SetDevice(const int device_id);
   // Prints the current GPU status.
   static void DeviceQuery();
-  inline static void setThreadId(int thread_id){Get().thread_id_ = thread_id;}
-  inline static int getThreadId(){return Get().thread_id_;}
-  inline static void setThreadNum(int thread_num){Get().thread_num_ = thread_num;}
-  inline static int getThreadNum(){return Get().thread_num_;}
-  inline static void setGPUId(int gpu_id){Get().gpu_id_ = gpu_id;}
-  inline static int getGPUId(){return Get().gpu_id_;}
-  inline static void setIterSize(int iter_size){Get().iter_size_ = iter_size;}
-  inline static int getIterSize(){return Get().iter_size_;}
-  inline static void setIter(int iter){Get().iter_ = iter;}
-  inline static int getIter(){return Get().iter_;}
-  inline static void setNodeNum(int node_num){Get().node_num_ = node_num;}
-  inline static int getNodeNum(){return Get().node_num_;}
-  inline static void setBestAccuracy(float best_accuracy){Get().best_accuracy_ = best_accuracy;}
-  inline static float getBestAccuracy(){return Get().best_accuracy_;}
-  inline static void setAccuracy(float accuracy){Get().accuracy_ = accuracy;}
-  inline static float getAccuracy(){return Get().accuracy_;}
-  inline static void setTaskList(void *task_list) {Get().task_list_ = task_list;}
-  inline static void* getTaskList(){return Get().task_list_;}
-  //inline static Strategy getStrategy() { return Get().strategy_; }
-  //inline static void setStrategy(Strategy strategy) { Get().strategy_ = strategy; }
-  inline static bool getMemoryOpt() { return Get().memory_opt_; }
-  inline static void setMemoryOpt(const bool opt) { Get().memory_opt_ = opt; }
-
-#ifdef USE_MPI
-  enum PARALLEL_MODE { NO, MPI };
-
-  //Returns current parallel mode, No or MPI
-  inline static PARALLEL_MODE parallel_mode() {return Get().parallel_mode_;}
-  // Setter of parallel mode
-  inline static void set_parallel_mode(PARALLEL_MODE mode) {Get().parallel_mode_ = mode;}
-
-  //Returns MPI_MY_RANK
-  inline static int MPI_my_rank(){return Get().mpi_my_rank_;}
-  inline static int MPI_all_rank(){return Get().mpi_all_rank_;}
-  inline static void MPI_build_rank(){
-    MPI_Comm_rank(MPI_COMM_WORLD, &(Get().mpi_my_rank_));
-    MPI_Comm_size(MPI_COMM_WORLD, &(Get().mpi_all_rank_));
-  }
-  inline static int device_id(){return Get().device_id_;}
-  inline static int remaining_sub_iter(){return Get().remaining_sub_iter_;}
-  inline static void set_remaining_sub_iter(int n){Get().remaining_sub_iter_ = n;}
-#endif
-
-#ifdef WITH_PYTHON_LAYER
-  inline static PyThreadState* py_tstate(){return Get().py_tstate_;}
-  inline static void set_py_tstate(PyThreadState* new_state){Get().py_tstate_ = new_state;}
-#endif
-
-#ifdef USE_CUDNN
-  inline static int cudnn_mem_richness(){return Get().cudnn_mem_richness_;}
-  inline static void set_cudnn_mem_richness(int richness){Get().cudnn_mem_richness_ = richness;}
-#endif
+  // Parallel training info
+  inline static int solver_count() { return Get().solver_count_; }
+  inline static void set_solver_count(int val) { Get().solver_count_ = val; }
+  inline static bool root_solver() { return Get().root_solver_; }
+  inline static void set_root_solver(bool val) { Get().root_solver_ = val; }
 
  protected:
 #ifndef CPU_ONLY
@@ -229,37 +165,10 @@ class Caffe {
   curandGenerator_t curand_generator_;
 #endif
   shared_ptr<RNG> random_generator_;
-  int thread_id_;
-  int thread_num_;
-  int node_num_;
-  int gpu_id_;
-  int iter_size_;
-  int iter_;
-  float best_accuracy_;
-  float accuracy_;
-  void* task_list_;
-  //Strategy strategy_;
-  bool memory_opt_;
-
-#ifdef USE_CUDNN
-  int cudnn_mem_richness_;
-#endif
-
-#ifdef USE_MPI
-
-  PARALLEL_MODE parallel_mode_;
-  int mpi_my_rank_;
-  int mpi_all_rank_;
-  int device_id_;
-  int remaining_sub_iter_;
-#endif
-
-#ifdef WITH_PYTHON_LAYER
-  PyThreadState* py_tstate_;
-#endif
 
   Brew mode_;
-  static shared_ptr<Caffe> singleton_;
+  int solver_count_;
+  bool root_solver_;
 
  private:
   // The private constructor to avoid duplicate instantiation.
