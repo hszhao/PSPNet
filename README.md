@@ -4,7 +4,7 @@ by Hengshuang Zhao, Jianping Shi, Xiaojuan Qi, Xiaogang Wang, Jiaya Jia, details
 
 ### Introduction
 
-This repository is modified from Caffe version of [yjxiong](https://github.com/yjxiong/caffe/tree/mem) and [DeepLab v2](https://bitbucket.org/aquariusjay/deeplab-public-ver2) for evaluation. We merge the batch normalization layer named 'bn_layer' in the former one into the later one while keep the original 'batch_norm_layer' in the later one unchanged for compatibility. The difference is that 'bn_layer' contains four parameters as 'slope,bias,mean,variance' while 'batch_norm_layer' contains two parameters as 'mean,variance'. Several evaluation code is borrowed from [MIT Scene Parsing](https://github.com/CSAILVision/sceneparsing).
+This repository is for '[Pyramid Scene Parsing Network](https://arxiv.org/abs/1612.01105)', which ranked 1st place in [ImageNet Scene Parsing Challenge 2016](http://image-net.org/challenges/LSVRC/2016/results). The code is modified from Caffe version of [yjxiong](https://github.com/yjxiong/caffe/tree/mem) and [DeepLab v2](https://bitbucket.org/aquariusjay/deeplab-public-ver2) for evaluation. We merge the batch normalization layer named 'bn_layer' in the former one into the later one while keep the original 'batch_norm_layer' in the later one unchanged for compatibility. The difference is that 'bn_layer' contains four parameters as 'slope,bias,mean,variance' while 'batch_norm_layer' contains two parameters as 'mean,variance'. Several evaluation code is borrowed from [MIT Scene Parsing](https://github.com/CSAILVision/sceneparsing).
 
 ### Installation
 
