@@ -10,69 +10,84 @@
 namespace caffe {
 
 template <typename Dtype>
-void CuDNNBNLayer<Dtype>::LayerSetUp(const vector<Blob<Dtype>*>& bottom,
-      const vector<Blob<Dtype>*>& top) {
-  BNLayer<Dtype>::LayerSetUp(bottom, top);
-  save_mean_.ReshapeLike(*(this->blobs_[2]));
-  save_inv_variance_.ReshapeLike(*(this->blobs_[3]));
+void CuDNNBNLayer<Dtype>::Forward_gpu(const vector<Blob<Dtype>*>& bottom,
+    const vector<Blob<Dtype>*>& top) {
+  const Dtype* bottom_data = bottom[0]->gpu_data();
+  Dtype* top_data = top[0]->mutable_gpu_data();
+  const Dtype* scale_data = this->blobs_[0]->gpu_data();
+  const Dtype* bias_data = this->blobs_[1]->gpu_data();
 
-  // Initialize CUDNN.
-  CUDNN_CHECK(cudnnCreate(&handle_));
-  cudnn::createTensor4dDesc<Dtype>(&bottom_desc_);
-  cudnn::createTensor4dDesc<Dtype>(&top_desc_);
-  cudnn::createTensor4dDesc<Dtype>(&bn_param_desc_);
-  handles_setup_ = true;
-  
-  LOG(INFO)<<"using cuDNN BN engine";
-}
+  const double epsilon = max(this->bn_eps_, CUDNN_BN_MIN_EPSILON);
 
-template <typename Dtype>
-void CuDNNBNLayer<Dtype>::Reshape(const vector<Blob<Dtype>*>& bottom,
-      const vector<Blob<Dtype>*>& top) {
-  // Do not call BNLayer::Reshape function as some members are unnecessary
-  this->num_ = bottom[0]->num();
-  this->channels_ = bottom[0]->channels();
-  this->height_ = bottom[0]->height();
-  this->width_ = bottom[0]->width();
-
-  top[0]->ReshapeLike(*(bottom[0]));
-
-  // CUDNN tensors
-  cudnn::setTensor4dDesc<Dtype>(&bottom_desc_, this->num_, this->channels_,
-                                this->height_, this->width_);
-  cudnn::setTensor4dDesc<Dtype>(&top_desc_, this->num_, this->channels_,
-                                this->height_, this->width_);
-  // Fix to the spatial mode
-  CUDNN_CHECK(cudnnDeriveBNTensorDescriptor(bn_param_desc_,
-      bottom_desc_, CUDNN_BATCHNORM_SPATIAL));
-
-  if (this->frozen_){
-    this->broadcast_buffer_.ReshapeLike(*(bottom[0]));
-    this->spatial_statistic_.Reshape(this->num_, this->channels_, 1, 1);
-    this->batch_statistic_.Reshape(1, this->channels_, 1, 1);
-
-    this->spatial_sum_multiplier_.Reshape(1, 1, this->height_, this->width_);
-    caffe_set(this->spatial_sum_multiplier_.count(), Dtype(1),
-      this->spatial_sum_multiplier_.mutable_cpu_data());
-    this->batch_sum_multiplier_.Reshape(this->num_, 1, 1, 1);
-    caffe_set(this->batch_sum_multiplier_.count(), Dtype(1),
-      this->batch_sum_multiplier_.mutable_cpu_data());
-
+  if (this->phase_ == TEST || this->frozen_) {
+    const Dtype* running_mean_data = this->blobs_[2]->gpu_data();
+    const Dtype* running_variance_data = this->blobs_[3]->gpu_data();
+    CUDNN_CHECK(cudnnBatchNormalizationForwardInference(handle_,
+        CUDNN_BATCHNORM_SPATIAL,
+        cudnn::dataType<Dtype>::one,
+        cudnn::dataType<Dtype>::zero,
+        bottom_desc_, bottom_data,
+        top_desc_, top_data,
+        bn_param_desc_, scale_data, bias_data,
+        running_mean_data, running_variance_data,
+        epsilon));
+  } else {
+    Dtype* running_mean_data = this->blobs_[2]->mutable_gpu_data();
+    Dtype* running_variance_data = this->blobs_[3]->mutable_gpu_data();
+    Dtype* save_mean_data = save_mean_.mutable_gpu_data();
+    Dtype* save_inv_variance_data = save_inv_variance_.mutable_gpu_data();
+    CUDNN_CHECK(cudnnBatchNormalizationForwardTraining(handle_,
+        CUDNN_BATCHNORM_SPATIAL,
+        cudnn::dataType<Dtype>::one,
+        cudnn::dataType<Dtype>::zero,
+        bottom_desc_, bottom_data,
+        top_desc_, top_data,
+        bn_param_desc_, scale_data, bias_data,
+        1 - this->bn_momentum_,
+        running_mean_data, running_variance_data,
+        epsilon,
+        save_mean_data, save_inv_variance_data));
   }
 }
 
 template <typename Dtype>
-CuDNNBNLayer<Dtype>::~CuDNNBNLayer() {
-  // Check that handles have been setup before destroying.
-  if (!handles_setup_) { return; }
+void CuDNNBNLayer<Dtype>::Backward_gpu(const vector<Blob<Dtype>*>& top,
+    const vector<bool>& propagate_down, const vector<Blob<Dtype>*>& bottom) {
+   if (this->frozen_){
+     BNLayer<Dtype>::Backward_gpu(top, propagate_down, bottom);
+     return;
+   }
+  if (propagate_down[0] || this->param_propagate_down_[0] ||
+      this->param_propagate_down_[1]) {
+    const Dtype* top_diff = top[0]->gpu_diff();
+    const Dtype* bottom_data = bottom[0]->gpu_data();
+    Dtype* bottom_diff = bottom[0]->mutable_gpu_diff();
+    const Dtype* scale_data = this->blobs_[0]->gpu_data();
+    Dtype* scale_diff = this->blobs_[0]->mutable_gpu_diff();
+    Dtype* bias_diff = this->blobs_[1]->mutable_gpu_diff();
+    const Dtype* save_mean_data = save_mean_.gpu_data();
+    const Dtype* save_inv_variance_data = save_inv_variance_.gpu_data();
 
-  cudnnDestroyTensorDescriptor(bottom_desc_);
-  cudnnDestroyTensorDescriptor(top_desc_);
-  cudnnDestroyTensorDescriptor(bn_param_desc_);
-  cudnnDestroy(handle_);
+    const double epsilon = max(this->bn_eps_, CUDNN_BN_MIN_EPSILON);
+
+    CUDNN_CHECK(cudnnBatchNormalizationBackward(handle_,
+        CUDNN_BATCHNORM_SPATIAL,
+        cudnn::dataType<Dtype>::one,
+        cudnn::dataType<Dtype>::zero,
+        cudnn::dataType<Dtype>::one,
+        cudnn::dataType<Dtype>::one,
+        bottom_desc_, bottom_data,
+        top_desc_, top_diff,
+        bottom_desc_, bottom_diff,
+        bn_param_desc_, scale_data,
+        scale_diff, bias_diff,
+        epsilon,
+        save_mean_data, save_inv_variance_data));
+
+  }
 }
 
-INSTANTIATE_CLASS(CuDNNBNLayer);
+INSTANTIATE_LAYER_GPU_FUNCS(CuDNNBNLayer);
 
 }  // namespace caffe
 #endif
