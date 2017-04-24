@@ -1,6 +1,6 @@
 ## Pyramid Scene Parsing Network
 
-by Hengshuang Zhao, Jianping Shi, Xiaojuan Qi, Xiaogang Wang, Jiaya Jia, details are in [project page](http://www.cse.cuhk.edu.hk/~hszhao/projects/pspnet/index.html).
+by Hengshuang Zhao, Jianping Shi, Xiaojuan Qi, Xiaogang Wang, Jiaya Jia, details are in [project page](https://hszhao.github.io/projects/pspnet/index.html).
 
 ### Introduction
 
@@ -63,23 +63,21 @@ The code has been tested successfully on Ubuntu 14.04 and 12.04 with CUDA 7.0.
 
 5. Demo video:
 
-   Video processed by PSPNet101 on cityscapes dataset: [Youtube](https://youtu.be/gdAVqJn_J2M)
+   Video processed by PSPNet101 on cityscapes dataset:
+
+   Merge with colormap on side: [Video1](https://youtu.be/rB1BmBOkKTw)
+
+   Alpha blending with value as 0.5: [Video2](https://youtu.be/HYghTzmbv6Q)
 
 ## Citation
 
 If PSPNet is useful for your research, please consider citing:
 
-    @article{zhao2016pspnet,
-      author    = {Hengshuang Zhao and
-      			   Jianping Shi and
-      			   Xiaojuan Qi and
-      			   Xiaogang Wang and
-      			   Jiaya Jia},
-      title     = {Pyramid Scene Parsing Network},
-      journal   = {CoRR},
-      volume    = {abs/1612.01105},
-      year      = {2016},
-      url       = {https://arxiv.org/abs/1612.01105},
+    @inproceedings{zhao2017pspnet,
+      author = {Hengshuang Zhao, Jianping Shi, Xiaojuan Qi, Xiaogang Wang and Jiaya Jia},
+      title = {Pyramid Scene Parsing Network},
+      booktitle = {Proceedings of IEEE Conference on Computer Vision and Pattern Recognition (CVPR)},
+      year = {2017}
     }
 ### Questions
 
