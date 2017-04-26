@@ -74,7 +74,11 @@ The code has been tested successfully on Ubuntu 14.04 and 12.04 with CUDA 7.0.
 If PSPNet is useful for your research, please consider citing:
 
     @inproceedings{zhao2017pspnet,
-      author = {Hengshuang Zhao, Jianping Shi, Xiaojuan Qi, Xiaogang Wang and Jiaya Jia},
+      author = {Hengshuang Zhao and
+                Jianping Shi and
+                Xiaojuan Qi and
+                Xiaogang Wang and
+                Jiaya Jia},
       title = {Pyramid Scene Parsing Network},
       booktitle = {Proceedings of IEEE Conference on Computer Vision and Pattern Recognition (CVPR)},
       year = {2017}
