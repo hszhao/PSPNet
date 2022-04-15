@@ -37,9 +37,9 @@ The code has been tested successfully on Ubuntu 14.04 and 12.04 with CUDA 7.0.
 
    - Evaluation code is in folder 'evaluation'.
    - Download trained models and put them in folder 'evaluation/model':
-     - pspnet50\_ADE20K.caffemodel: [GoogleDrive](https://drive.google.com/file/d/0BzaU285cX7TCN1R3QnUwQ0hoMTA/view?usp=sharing&resourcekey=0-L6OpeoyQEhFhmmoYPmYcZA)
-     - pspnet101\_VOC2012.caffemodel: [GoogleDrive](https://drive.google.com/file/d/0BzaU285cX7TCNVhETE5vVUdMYk0/view?usp=sharing&resourcekey=0-xFuZ3szHOg4z0eYBhuJDSA)
-     - pspnet101\_cityscapes.caffemodel: [GoogleDrive](https://drive.google.com/file/d/0BzaU285cX7TCT1M3TmNfNjlUeEU/view?usp=sharing&resourcekey=0-7zvi4rARgQoXa6_AvZ17qg)
+     - pspnet50\_ADE20K.caffemodel: [GoogleDrive](https://drive.google.com/file/d/1SyCa_mEB-WiwvnqyBBBkWycS1zQDtDzW/view?usp=sharing)
+     - pspnet101\_VOC2012.caffemodel: [GoogleDrive](https://drive.google.com/file/d/1-jjYyRzbNEwsdQYP2UPJVy0ZV_yCVU2N/view?usp=sharing)
+     - pspnet101\_cityscapes.caffemodel: [GoogleDrive](https://drive.google.com/file/d/1-Me01pX1KUsut_7l6uJXkIbaBxxSVgX0/view?usp=sharing)
    - Modify the related paths in 'eval_all.m':
      - Mainly variables 'data_root' and 'eval_list', and your image list for evaluation should be similarity to that in folder 'evaluation/samplelist' if you use this evaluation code structure. 
      - Matlab 'parfor' evaluation is used and the default GPUs are with ID [0:3]. Modify variable 'gpu_id_array' if needed. We assume that number of images can be divided by number of GPUs; if not, you can just pad your image list or switch to single GPU evaluation by set 'gpu_id_array' be length of one, and change 'parfor' to 'for' loop.
